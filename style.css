@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+#map {
+  height: 50%
+}
+
+.foursquare-page {
+  border: solid black 1px;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.pill-title {
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
+  color: #222222;
+  margin-bottom: 0;
+}
+
+.pill-title span {}
+
+.pill-description {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 200;
+  font-style: italic;
+  margin-left: 1.5rem;
+}
+
+.pill-categories {
+  display: flex;
+}
+
+.pill-categories div {
+  background: orange;
+  color: white;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1.3rem;
+  border-radius: 22px;
+}

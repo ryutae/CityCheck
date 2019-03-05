@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>API hack capstone</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <form class="set-cities">
+    <label for="">Starting Location</label><input type="text" name="current-loc" value="">
+    <button type="button" id="use-current-loc" name="button">Use current location</button>
+    <label for="">Destination</label><input type="text" name="destination-loc" value="" placeholder="Santa Barbara, CA">
+    <button type="button" id="button-start-search" name="submit">Start Planning!</button>
+  </form>
+  <p class="current-position"></p>
+  <p class="error-msg"></p>
+  <main class="results">
+    <section class="foursquare">
+
+    </section>
+
+    <section class="weather">
+
+    </section>
+
+    <section class="maps">
+      <div id="map"></div>
+    </section>
+  </main>
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+  <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+<script type="text/javascript">
+  gapi.load('auth2', function() {
+    // Library loaded.
+  });
+</script>
+  <script type="text/javascript" src="index.js">
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDf4F76gQQxbu-fpuGgWklK72LdZoWF4Vg&callback=initMap">
+  </script>  
+</body>
+
+</html>
