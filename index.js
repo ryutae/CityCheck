@@ -1,16 +1,12 @@
 let destLoc = '';
 let markers = [];
+
 const fourURL = 'https://api.foursquare.com/v2/venues/explore?';
-const CLIENT_ID = 'KL5BWO4QF221XC3CFHVUQLRMKPOR3SE0USF5BOMVDI50F5RL';
-const CLIENT_SECRET = 'JQRUBFHSM1CGAANS1WXC3XFJ4NTUFITH3AN1UEYCVDHXGQBY';
-const weatherAPI = '263c0d85b560ada9a7be4fc958bb6f90';
 // api.openweathermap.org/data/2.5/forecast?q={city name},{country code}
 // api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}
 
 const weatherURL = 'https://api.openweathermap.org/data/2.5/'
 const directionsURL = 'https://maps.googleapis.com/maps/api/directions/json?';
-const mapsAPI = 'AIzaSyDf4F76gQQxbu-fpuGgWklK72LdZoWF4Vg';
-
 var geocoder;
 
 function initialize() {
@@ -156,7 +152,6 @@ function getWeatherForecast(weatherParams) {
 
 function renderWeatherForecast(element) {
   let result = '';
-  debugger;
   result += `<div class="weather-forecast-pill weather-container">
         <p class="weather-date">${element.dt_txt}</p>
         <img class="weather-icon" src="http://openweathermap.org/img/w/${element.weather[0].icon}.png">
