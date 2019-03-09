@@ -7,6 +7,7 @@
 .hidden {
   display: none
 }
+
 #map {
   height: 50%;
   background-color: grey;
@@ -15,10 +16,12 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #72ffb9;
+  color: #222222;
 }
 
 a {
-  text-decoration: none
+  text-decoration: none;
+  color: #222222;
 }
 
 #map {
@@ -26,8 +29,18 @@ a {
   height: 100%;
 }
 
-.set-cities {
-  border: solid black 1px;
+.set-cities {}
+
+#button-start-search {
+  padding: .5rem;
+  transition: 0.3s;
+  font-size: 1rem;
+}
+
+#button-start-search:hover {
+  background-color: DodgerBlue;
+  font-weight: 500;
+  color: white;
 }
 
 .section-header {
@@ -41,6 +54,7 @@ a {
   padding: 1rem;
   margin: 1rem;
   border-radius: 10px;
+  background-color: #ffcb72;
 }
 
 .pill-title {
@@ -65,16 +79,43 @@ a {
 }
 
 .pill-categories div {
-  background: #ffa527;
+  background: #9872ff;
   color: white;
   margin: 0 0.5rem;
   padding: 0.5rem 1.3rem;
   border-radius: 22px;
 }
 
+.foursquare-pill-button {
+  padding: .5rem;
+  opacity: 0.8;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.foursquare-pill-button:hover {
+  opacity: 1
+}
+
+.like-button-selected {
+  background-color: DodgerBlue;
+  color: white;
+}
+
+.dislike-button-selected {
+  background-color: red;
+  color: white;
+}
+
 .weather-container {
   text-align: center;
+  border: solid black 1px;
+  border-radius: 10px;
+  padding: 0 2rem;
+  margin: 1rem;
+  background-color: #72b8ff;
 }
+
 .weather-current-container {
   border: black solid 1px;
   padding: 0.5rem;
