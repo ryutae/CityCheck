@@ -29,7 +29,20 @@ a {
   height: 100%;
 }
 
-.set-cities {}
+.set-cities {
+  text-align: center;
+  margin: 1rem;
+  font-size: 20px;
+}
+
+.set-cities label {
+  margin-right: 1rem;
+}
+
+.set-cities input {
+  font-size: 20px;
+  line-height: 1.4rem;
+}
 
 #button-start-search {
   padding: .5rem;
@@ -84,6 +97,7 @@ a {
   margin: 0 0.5rem;
   padding: 0.5rem 1.3rem;
   border-radius: 22px;
+  margin-top: 1rem;
 }
 
 .foursquare-pill-button {
@@ -95,6 +109,10 @@ a {
 
 .foursquare-pill-button:hover {
   opacity: 1
+}
+
+.foursquare-pill-address {
+  margin: 1rem 0 0 1rem;
 }
 
 .like-button-selected {
@@ -112,7 +130,7 @@ a {
   border: solid black 1px;
   border-radius: 10px;
   padding: 0 2rem;
-  margin: 1rem;
+  margin: 1rem 7rem;
   background-color: #72b8ff;
 }
 
@@ -131,7 +149,7 @@ a {
   border: solid black 1px;
   border-radius: 10px;
   padding: 0 2rem;
-  margin: 1rem;
+  margin: 1rem 7rem;
   background-color: #72b8ff;
 }
 
@@ -141,6 +159,14 @@ a {
 
 .weather-icon {
   text-align: center;
+  width: 70px;
+  height: 70px;
+}
+
+/* resize images */
+.weather-icon img {
+  width: 100%;
+  height: auto;
 }
 
 .weather-icon-details {

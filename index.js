@@ -91,6 +91,9 @@ function renderFoursquarePillCategories(elements) {
 }
 
 function renderFoursquarePill(element, index) {
+  let address = '';
+  if (element.venue.location.address) {address = element.venue.location.address}
+    else {address = 'Address not found'};
   return `<div class="foursquare-page">
       <p class="pill-title"><span>${index+1}.</span> <a href="https://foursquare.com/v/${element.venue.id}" target="_blank">${element.venue.name}</a>       <button class="foursquare-pill-button foursquare-pill-button-like">Check Out!</button>
             <button class="foursquare-pill-button foursquare-pill-button-dislike">Dislike</button></p>
@@ -99,12 +102,10 @@ function renderFoursquarePill(element, index) {
 
     `</div>
 
-      <ul>
-        <li>${element.venue.location.address}
-        ${element.venue.location.city}, ${element.venue.location.state}
-        Lat: ${element.venue.location.lat}
-        Lon: ${element.venue.location.lng}</li>
-      </ul>
+      <div class="foursquare-pill-address">
+      ${address} -
+        <a href="https://www.google.com/maps/search/?api=1&query=${element.venue.location.lat},${element.venue.location.lng}">See Map</a>
+      </div>
         </div>
     `
 }
@@ -124,9 +125,9 @@ function getFoursquare(fourParams) {
 
         )
       };
-      $('.foursquare').append(
-        `<pre>${JSON.stringify(responseJson, null, 4)}</pre>`
-      );
+    //  $('.foursquare').append(
+    //     `<pre>${JSON.stringify(responseJson, null, 4)}</pre>`
+    //   );
     });
 }
 
@@ -144,7 +145,7 @@ function getWeatherForecast(weatherParams) {
       $('.weather').append(
         `<p class="section-header">Weather Forecast</p>`);
       for (let i = 0; i < responseJson.list.length; i += 8) {
-        debugger;
+        ;
         $('.weather').append(renderWeatherForecast(responseJson.list[i]))
       };
       //$('.weather').append(`<pre>${JSON.stringify(responseJson, null, 4)}</pre>`)
@@ -173,14 +174,14 @@ function renderWeatherForecast(element) {
     hour: '2-digit',
     minute: '2-digit'
   });
-  //let dateString = `${dateObject.day} ${dateObject.month} ${dateObject.date}  ${time}`;
+  let dateString = `${dateObject.day},  ${dateObject.month} ${dateObject.date}`;
   //add to a forecastArray days starting from tomorrow
 
-  result += `<div class="weather-forecast-pill weather-container">
-        <p class="weather-date">${dateTimeForecast}</p>
+  result += `<div class="weather-container">
+        <p class="weather-date">${dateString}</p>
         <img class="weather-icon" src="http://openweathermap.org/img/w/${element.weather[0].icon}.png">
         <p class="weather-icon-details">${element.weather[0].main} - ${element.weather[0].description}</p>
-        <p class="weather-details">Temp: ${Math.round(element.main.temp)} Humidity: ${element.main.humidity} </p>      </div>`;
+        <p class="weather-details">${Math.round(element.main.temp)}°F Humidity: ${element.main.humidity} </p>      </div>`;
   return result;
 }
 
@@ -194,7 +195,7 @@ function getWeatherCurrent(weatherParams) {
       $('.weather').append(
         `<p class="section-header">Current Weather at ${responseJson.name}</p>
                 <div class="weather-container"> <img class="weather-icon" src="http://openweathermap.org/img/w/${responseJson.weather[0].icon}.png"> <p class="weather-icon-details">${responseJson.weather[0].main} - ${responseJson.weather[0].description}</p>
-                <p class="weather-details">Current temp: ${Math.round(responseJson.main.temp)}</>  <p class="weather-details">Current humidity: ${responseJson.main.humidity}</p>
+                <p class="weather-details">${Math.round(responseJson.main.temp)}°F    ${responseJson.main.humidity}% humidity</p>
         </div>`);
       // $('.weather').append(`
       //   Weather Current Response:
