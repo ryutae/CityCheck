@@ -5,47 +5,42 @@
   <meta charset="utf-8">
   <title>API hack capstone</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
 </head>
 
 <body>
-  <form class="set-cities">
-    <!-- <label for="">Starting Location</label><input type="text" name="current-loc" value="">
-    <button type="button" id="use-current-loc" name="button">Use current location</button> -->
-    <label for="destination-loc">Destination</label><input type="text" name="destination-loc" value="" placeholder="Goleta">
-    <button type="button" id="button-start-search" name="submit">Explore City!</button>
-  </form>
+  <div class="start-screen">
+    <h1>City Check</h1>
+    <form class="set-cities">
+      <!-- <label for="">Starting Location</label><input type="text" name="current-loc" value="">
+      <button type="button" id="use-current-loc" name="button">Use current location</button> -->
+      <label for="destination-loc">Destination</label><input type="text" name="destination-loc" value="" placeholder="Goleta">
+      <button type="button" class="button-start-search" name="submit">Explore City!</button>
+    </form>
+  </div>
+
   <p class="current-position"></p>
   <p class="error-msg"></p>
   <main class="results">
     <section class="weather">
+        <div class="weather-current">
 
+        </div>
+        <div class="weather-forecast">
+
+        </div>
     </section>
     <section class="foursquare">
 
     </section>
-
-
-    <section class="maps">
-      <div id="map"></div>
-    </section>
   </main>
 
 
-
-
-
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-
-  <!-- <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
-<script type="text/javascript">
-  gapi.load('auth2', function() {
-    // Library loaded.
-  });
-</script> -->
   <script type="text/javascript" src="keys.js"></script>
   <script type="text/javascript" src="index.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDf4F76gQQxbu-fpuGgWklK72LdZoWF4Vg">
-  </script>
 </body>
 
 </html>

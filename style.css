@@ -1,22 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.maps {
-  height: 100%
-}
-
 .hidden {
   display: none
 }
 
-#map {
-  height: 50%;
-  background-color: grey;
-}
-
 body {
+  background: url('https://farm2.staticflickr.com/1867/44502616031_9ffdb932fc_b.jpg') fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   font-family: 'Roboto', sans-serif;
   background-color: #72ffb9;
-  color: #222222;
+  color: #fff;
 }
 
 a {
@@ -24,33 +19,44 @@ a {
   color: #222222;
 }
 
-#map {
-  width: 100%;
-  height: 100%;
+.start-screen {
+  text-align: center;
+  background-color: rgba(94, 83, 83, 0.3);
+  width: 80%;
+  margin: 40% auto;
+  padding: 1rem;
+}
+
+.start-screen h1 {
+  font-size: 70px;
 }
 
 .set-cities {
   text-align: center;
-  margin: 1rem;
-  font-size: 20px;
+  margin: 3rem 1rem;
+  font-size: 2rem;
 }
 
 .set-cities label {
   margin-right: 1rem;
+  font-size: 50px;
 }
 
 .set-cities input {
-  font-size: 20px;
+  font-size: 50px;
   line-height: 1.4rem;
 }
 
-#button-start-search {
+.button-start-search {
+  margin-top: 2rem;
   padding: .5rem;
   transition: 0.3s;
-  font-size: 1rem;
+  font-size: 50px;
+  background-color: #fff;
+  border-radius: 10px;
 }
 
-#button-start-search:hover {
+.button-start-search:hover {
   background-color: DodgerBlue;
   font-weight: 500;
   color: white;
@@ -58,16 +64,17 @@ a {
 
 .section-header {
   font-size: 1.5rem;
-  margin: 1rem 0;
+  margin: 3rem 0 0 0;
   text-align: center;
 }
 
 .foursquare-page {
   border: solid black 1px;
   padding: 1rem;
-  margin: 1rem;
+  margin: 1rem auto;
   border-radius: 10px;
   background-color: #ffcb72;
+  width: 75%;
 }
 
 .pill-title {
@@ -132,26 +139,9 @@ a {
   padding: 0 2rem;
   margin: 1rem 7rem;
   background-color: #72b8ff;
+  font-size: 1rem;
 }
 
-.weather-current-container {
-  border: black solid 1px;
-  padding: 0.5rem;
-  background-color: #72b8ff;
-  border-radius: 10px;
-}
-
-.weather-forecast-container {
-  border: black solid 1px;
-}
-
-.weather-forecast-pill {
-  border: solid black 1px;
-  border-radius: 10px;
-  padding: 0 2rem;
-  margin: 1rem 7rem;
-  background-color: #72b8ff;
-}
 
 .weather-date {
   font-size: 1.2rem;
@@ -171,6 +161,7 @@ a {
 
 .weather-icon-details {
   margin: 0;
+  font-size: .8rem;
 }
 
 .weather-details {

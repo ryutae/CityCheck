@@ -7,73 +7,6 @@ const fourURL = 'https://api.foursquare.com/v2/venues/explore?';
 
 const weatherURL = 'https://api.openweathermap.org/data/2.5/'
 const directionsURL = 'https://maps.googleapis.com/maps/api/directions/json?';
-//geocoder = new google.maps.Geocoder();
-function initialize() {
-  geocoder = new google.maps.Geocoder();
-  var latlng = new google.maps.LatLng(40.648610, -101.942230);
-  var mapOptions = {
-    zoom: 3,
-    center: latlng,
-    zoomControl: true
-  };
-  let map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-  // var marker = new google.maps.Marker({
-  //   // The below line is equivalent to writing:
-  //   // position: new google.maps.LatLng(-34.397, 150.644)
-  //   position: {
-  //     lat: -34.397,
-  //     lng: 150.644
-  //   },
-  //   map: map
-  // });
-  // var infowindow = new google.maps.InfoWindow({
-  //   content: '<p>Marker Location:' + marker.getPosition() + '</p>'
-  // });
-
-  // google.maps.event.addListener(marker, 'click', function() {
-  //   infowindow.open(map, marker);
-  // });
-}
-// google.maps.event.addDomListener(window, 'load', initialize);
-
-function cleanMarkers() {
-  markers = [];
-}
-//
-// function centerMapToLocation(loc) {
-//   var addressSearch = loc;
-//
-//   getLatLngFromAddressAsync(addressSearch, function(location) {
-//     map.setCenter(location);
-//     map.setZoom(7);
-//   });
-// }
-
-function getLatLngFromAddressAsync(addressSearch, callback) {
-
-  if (!addressSearch) {
-    return;
-  }
-  geocoder.geocode({
-    'address': addressSearch
-  }, function(results, status) {
-    if (status == 'OK') {
-      callback(results[0].geometry.location)
-    }
-  });
-}
-/*
-function createMarker(latlon, currentPetName, index){
-
-	var marker = new google.maps.Marker({
-		position: latlon,
-		map: map,
-		title: currentPetName,
-		icon: 'images/icn_blue.png'
-	});
-	state.markers[index]=marker
-}*/
 
 function formatQueryParams(params) {
   const queryItems = Object.keys(params).map(key =>
@@ -81,56 +14,26 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-
-function renderFoursquarePillCategories(elements) {
-  let result = '';
-  for (let i = 0; i < elements.length; i++) {
-    result += `<div>${elements[i].name}</div>`
-  };
-  return result;
-}
-
-function renderFoursquarePill(element, index) {
-  let address = '';
-  if (element.venue.location.address) {address = element.venue.location.address}
-    else {address = 'Address not found'};
-  return `<div class="foursquare-page">
-      <p class="pill-title"><span>${index+1}.</span> <a href="https://foursquare.com/v/${element.venue.id}" target="_blank">${element.venue.name}</a>       <button class="foursquare-pill-button foursquare-pill-button-like">Check Out!</button>
-            <button class="foursquare-pill-button foursquare-pill-button-dislike">Dislike</button></p>
-      <div class="pill-categories">` +
-    renderFoursquarePillCategories(element.venue.categories) +
-
-    `</div>
-
-      <div class="foursquare-pill-address">
-      ${address} -
-        <a href="https://www.google.com/maps/search/?api=1&query=${element.venue.location.lat},${element.venue.location.lng}">See Map</a>
-      </div>
-        </div>
-    `
-}
-let foursquareResponse = [];
-
-function getFoursquare(fourParams) {
-  console.log('foursquare response:');
-  let fourRequest = fourURL + formatQueryParams(fourParams);
-  fetch(fourRequest)
+function getWeatherCurrent(weatherParams) {
+  console.log('weather current response:');
+  let weatherCurrentRequest = weatherURL + 'weather?' + formatQueryParams(weatherParams);
+  fetch(weatherCurrentRequest)
     .then(response => response.json())
     .then(responseJson => {
       console.log(responseJson);
-      foursquareResponse = responseJson;
-      $('.foursquare').append(`<p class="section-header">Foursquare Recommended places at ${responseJson.response.geocode.displayString}</p>`);
-      for (let i = 0; i < responseJson.response.groups[0].items.length; i++) {
-        $('.foursquare').append(renderFoursquarePill(responseJson.response.groups[0].items[i], i)
-
-        )
-      };
-    //  $('.foursquare').append(
-    //     `<pre>${JSON.stringify(responseJson, null, 4)}</pre>`
-    //   );
-    });
+      $('.weather-current').append(
+        `<p class="section-header">${responseJson.name} Current Weather</p>
+                <div class="weather-container"> <img class="weather-icon" src="http://openweathermap.org/img/w/${responseJson.weather[0].icon}.png"> <p class="weather-icon-details">${responseJson.weather[0].main}:  ${responseJson.weather[0].description}</p>
+                <p class="weather-details">${Math.round(responseJson.main.temp)}°F,     ${responseJson.main.humidity}% humidity</p>
+        </div>`);
+      // $('.weather').append(`
+      //   Weather Current Response:
+      // <pre>${JSON.stringify(responseJson, null, 4)}</pre>
+      // `
+      // );
+    })
+    .catch();
 }
-
 
 let forecastResponse = [];
 
@@ -142,11 +45,10 @@ function getWeatherForecast(weatherParams) {
     .then(responseJson => {
       console.log(responseJson);
       forecastResponse = responseJson;
-      $('.weather').append(
+      $('.weather-forecast').append(
         `<p class="section-header">Weather Forecast</p>`);
       for (let i = 0; i < responseJson.list.length; i += 8) {
-        ;
-        $('.weather').append(renderWeatherForecast(responseJson.list[i]))
+        $('.weather-forecast').append(renderWeatherForecast(responseJson.list[i]))
       };
       //$('.weather').append(`<pre>${JSON.stringify(responseJson, null, 4)}</pre>`)
     })
@@ -175,101 +77,84 @@ function renderWeatherForecast(element) {
     minute: '2-digit'
   });
   let dateString = `${dateObject.day},  ${dateObject.month} ${dateObject.date}`;
-  //add to a forecastArray days starting from tomorrow
 
   result += `<div class="weather-container">
         <p class="weather-date">${dateString}</p>
         <img class="weather-icon" src="http://openweathermap.org/img/w/${element.weather[0].icon}.png">
         <p class="weather-icon-details">${element.weather[0].main} - ${element.weather[0].description}</p>
-        <p class="weather-details">${Math.round(element.main.temp)}°F Humidity: ${element.main.humidity} </p>      </div>`;
+        <p class="weather-details">${Math.round(element.main.temp)}°F, ${element.main.humidity}% humidity</p>      </div>`;
   return result;
 }
 
-function getWeatherCurrent(weatherParams) {
-  console.log('weather current response:');
-  let weatherCurrentRequest = weatherURL + 'weather?' + formatQueryParams(weatherParams);
-  fetch(weatherCurrentRequest)
+
+
+function renderFoursquarePillCategories(elements) {
+  let result = '';
+  for (let i = 0; i < elements.length; i++) {
+    result += `<div>${elements[i].name}</div>`
+  };
+  return result;
+}
+
+function renderFoursquarePill(element, index) {
+  let address = '';
+  if (element.venue.location.address) {
+    address = element.venue.location.address
+  } else {
+    address = 'Address not found'
+  };
+  return `<div class="foursquare-page">
+      <p class="pill-title"><span>${index+1}.</span> <a href="https://foursquare.com/v/${element.venue.id}" target="_blank">${element.venue.name}</a>       <button class="foursquare-pill-button foursquare-pill-button-like">Check Out!</button>
+            <button class="foursquare-pill-button foursquare-pill-button-dislike">Dislike</button></p>
+      <div class="pill-categories">` +
+    renderFoursquarePillCategories(element.venue.categories) +
+
+    `</div>
+
+      <div class="foursquare-pill-address">
+      ${address} -
+        <a href="https://www.google.com/maps/search/?api=1&query=${element.venue.location.lat},${element.venue.location.lng}" target="_blank">See Map</a>
+      </div>
+        </div>
+    `
+}
+let foursquareResponse = [];
+
+function getFoursquare(fourParams) {
+  console.log('foursquare response:');
+  let fourRequest = fourURL + formatQueryParams(fourParams);
+  fetch(fourRequest)
     .then(response => response.json())
     .then(responseJson => {
       console.log(responseJson);
-      $('.weather').append(
-        `<p class="section-header">Current Weather at ${responseJson.name}</p>
-                <div class="weather-container"> <img class="weather-icon" src="http://openweathermap.org/img/w/${responseJson.weather[0].icon}.png"> <p class="weather-icon-details">${responseJson.weather[0].main} - ${responseJson.weather[0].description}</p>
-                <p class="weather-details">${Math.round(responseJson.main.temp)}°F    ${responseJson.main.humidity}% humidity</p>
-        </div>`);
-      // $('.weather').append(`
-      //   Weather Current Response:
-      // <pre>${JSON.stringify(responseJson, null, 4)}</pre>
-      // `
-      // );
-    })
-    .catch();
+      foursquareResponse = responseJson;
+      $('.foursquare').append(`<p class="section-header">Foursquare Recommended places at ${responseJson.response.geocode.displayString}</p>`);
+      for (let i = 0; i < responseJson.response.groups[0].items.length; i++) {
+        $('.foursquare').append(renderFoursquarePill(responseJson.response.groups[0].items[i], i)
+
+        )
+      };
+      //  $('.foursquare').append(
+      //     `<pre>${JSON.stringify(responseJson, null, 4)}</pre>`
+      //   );
+    });
 }
 
-
-
-
-// let map;
-//
-// function initMap() {
-//   map = new google.maps.Map(document.getElementById('map'), {
-//     center: {
-//       lat: -34.397,
-//       lng: 150.644
-//     },
-//     zoom: 8
-//   });
+// function watchCurrentLocation() {
+//   console.log('use current loc');
+//   $('#use-current-loc').click(e => {
+//     e.preventDefault();
+//     getLocation();
+//   })
 // }
 
-/*
-var xhr = new XMLHttpRequest();
-*/
-
-/*
-let distanceMatrixURL = 'https://maps.googleapis.com/maps/api/distancematrix/json?';
-function getDistanceMatrix(distanceMatrixParams) {
-  console.log('getting distance matrix');
-  let distanceMatrixRequest = distanceMatrixURL + formatQueryParams(distanceMatrixParams);
-  fetch(distanceMatrixRequest)
-  .then(response => response.json())
-  .then(responseJson => {
-    console.log(responseJson);
-    $('.maps').append(
-      `<h2>Distance Matrix</h2>
-      <pre>${JSON.stringify(responseJson, null, 4)}</pre>`)
-  })
-}*/
-
-function displayResults() {
-  $('.results').removeClass("hidden");
-}
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    $('.error-msg').append("Geolocation is not supported by this browser.");
-  }
-}
-
-function showPosition(position) {
-  $('.current-position').append(`Latitude: ${position.coords.latitude}
-  Longitude: ${position.coords.longitude}`);
-}
-
-
-function watchCurrentLocation() {
-  console.log('use current loc');
-  $('#use-current-loc').click(e => {
-    e.preventDefault();
-    getLocation();
-  })
-}
-
 function watchSubmit() {
-  $('#button-start-search').click(e => {
+  $('.button-start-search').click(e => {
     e.preventDefault();
-    $('.weather').empty();
+    $(".set-cities").detach().prependTo(".results");
+    $('.start-screen').addClass('hidden');
+    $('.weather-current').empty();
+    $('.weather-forecast').empty();
     $('.foursquare').empty();
     // $('.maps').empty();
     $('.error-msg').empty();
@@ -292,35 +177,11 @@ function watchSubmit() {
       units: 'imperial', //imperial-f, metric-c, standard-k
       APPID: weatherAPI
     };
-    // const directionsParams = {
-    //   origin: startLoc,
-    //   destination: destLoc,
-    //   key: mapsAPI
-    // };
-    // const distanceMatrixParams = {
-    //   origins: startLoc,
-    //   destinations: destLoc,
-    //   key: mapsAPI,
-    //   units: 'imperial'
-    // };
+
     getWeatherCurrent(weatherParams);
     getWeatherForecast(weatherParams);
     getFoursquare(fourParams);
-    // cleanMarkers();
-    initialize();
-    // centerMapToLocation(destLoc);
-    //  getDistanceMatrix(distanceMatrixParams);
-    // let fourRequest = fourURL + formatQueryParams(fourParams);
-    // // let fourRequest = `https://api.foursquare.com/v2/venues/search?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&query=coffee&near=Goleta&v=20190228`
-    //
-    // fetch(fourRequest)
-    //   .then(response => response.json())
-    //   .then(responseJson => console.log(responseJson));
-    //
-    // let weatherRequest = weatherURL + formatQueryParams(weatherParams);
-    // fetch(weatherRequest)
-    //   .then(response => response.json())
-    //   .then(responseJson => console.log(responseJson));
+
   })
 }
 
@@ -338,6 +199,5 @@ function watchButtonLike() {
 $(function() {
   console.log('app loaded');
   watchSubmit();
-  watchCurrentLocation();
   watchButtonLike();
 });
