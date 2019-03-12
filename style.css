@@ -235,8 +235,6 @@ a {
 
   .foursquare {
     width: 45%;
-    overflow-y: scroll;
-    height: 1000px;
   }
 
   .foursquare-page {
