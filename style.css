@@ -6,23 +6,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-}
-
-.background {
-  position: relative;
-  overflow: hidden;
-}
-
-.background:before {
-  content: ' ';
-  display: block;
-  position: absolute;
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-image: url('https://farm2.staticflickr.com/1867/44502616031_9ffdb932fc_b.jpg');
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.5) 100%), url('https://farm2.staticflickr.com/1867/44502616031_9ffdb932fc_b.jpg');
   background-position: center;
   background-size: cover;
   -ms-background-size: cover;
@@ -30,9 +14,10 @@ body {
   -moz-background-size: cover;
   -webkit-background-size: cover;
   background-repeat: no-repeat;
-  background-color: #72ffb9;
+  /* background-color: rgba(238, 238, 238, 0.6) !important; */
+  background-blend-mode: color;
   color: #fff;
-  z-index: -1;
+  background-attachment: fixed;
 }
 
 a {
@@ -44,12 +29,13 @@ a {
   text-align: center;
   background-color: rgba(94, 83, 83, 0.3);
   width: 80%;
+  height: 100%;
   margin: 40% auto;
   padding: 1rem;
 }
 
 .start-screen h1 {
-  font-size: 70px;
+  font-size: 3rem;
 }
 
 .set-cities {
@@ -60,11 +46,11 @@ a {
 
 .set-cities label {
   margin-right: 1rem;
-  font-size: 50px;
+  font-size: 2rem;
 }
 
 .set-cities input {
-  font-size: 50px;
+  font-size: 1.5rem;
   line-height: 1.4rem;
 }
 
@@ -72,7 +58,7 @@ a {
   margin-top: 2rem;
   padding: .5rem;
   transition: 0.3s;
-  font-size: 50px;
+  font-size: 2rem;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -199,7 +185,7 @@ a {
 /*Tablet View*/
 @media screen and (min-width: 768px) {
   .start-screen {
-    margin: 30% auto;
+    margin-top: 20%
   }
 
   .weather-container {
@@ -249,6 +235,8 @@ a {
 
   .foursquare {
     width: 45%;
+    overflow-y: scroll;
+    height: 1000px;
   }
 
   .foursquare-page {
