@@ -114,7 +114,7 @@ function renderFoursquarePill(element, index) {
   if (element.venue.location.address) {
     address = element.venue.location.address
   } else {
-    address = 'Address not found'
+    address = ''
   };
   return `<div class="foursquare-page">
       <p class="pill-title"><span>${index+1}.</span> <a href="https://foursquare.com/v/${element.venue.id}" target="_blank">${element.venue.name}</a> </p>      <button class="foursquare-pill-button foursquare-pill-button-like">Check Out!</button>
