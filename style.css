@@ -66,6 +66,7 @@ a {
   font-size: 1.5rem;
   margin: 3rem 0 0 0;
   text-align: center;
+  background-color: rgba(94, 83, 83, 0.3);
 }
 
 .foursquare-page {
@@ -75,10 +76,12 @@ a {
   border-radius: 10px;
   background-color: #ffcb72;
   width: 75%;
+  font-size: 1rem;
+  color: black;
 }
 
 .pill-title {
-  font-size: 1.8rem;
+  font-size: 2.7rem;
   margin-top: 0.5rem;
   color: #222222;
   margin-bottom: 0;
@@ -96,6 +99,7 @@ a {
 
 .pill-categories {
   display: flex;
+  font-size: 1.5rem;
 }
 
 .pill-categories div {
@@ -112,6 +116,9 @@ a {
   opacity: 0.8;
   transition: 0.3s;
   display: inline-block;
+  font-size: 1.8rem;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 .foursquare-pill-button:hover {
@@ -120,6 +127,7 @@ a {
 
 .foursquare-pill-address {
   margin: 1rem 0 0 1rem;
+  font-size: 1.5rem;
 }
 
 .like-button-selected {
@@ -141,7 +149,6 @@ a {
   background-color: #72b8ff;
   font-size: 1rem;
 }
-
 
 .weather-date {
   font-size: 1.2rem;
@@ -166,4 +173,13 @@ a {
 
 .weather-details {
   margin: 1rem 0;
+}
+
+/*Tablet View*/
+@media screen and (min-width: 700px) {
+  body {
+    display: flex;
+  }
+
+
 }
