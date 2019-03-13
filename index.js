@@ -31,7 +31,7 @@ function renderCurrentWeather(responseJson) {
   } else {
     $('.weather-current').append(
       `<p class="section-header">${responseJson.name} Current Weather</p>
-            <div class="weather-container"> <img class="weather-icon" src="http://openweathermap.org/img/w/${responseJson.weather[0].icon}.png"> <p class="weather-icon-details">${responseJson.weather[0].main}:  ${responseJson.weather[0].description}</p>
+            <div class="weather-container"> <img class="weather-icon" src="https://openweathermap.org/img/w/${responseJson.weather[0].icon}.png"> <p class="weather-icon-details">${responseJson.weather[0].main}:  ${responseJson.weather[0].description}</p>
             <p class="weather-details">${Math.round(responseJson.main.temp)}°F,     ${responseJson.main.humidity}% humidity</p>
     </div>`);
   }
@@ -85,7 +85,7 @@ function renderWeatherForecast(element) {
 
   result += `<div class="weather-container">
         <p class="weather-date">${dateString}</p>
-        <img class="weather-icon" src="http://openweathermap.org/img/w/${element.weather[0].icon}.png">
+        <img class="weather-icon" src="https://openweathermap.org/img/w/${element.weather[0].icon}.png">
         <p class="weather-icon-details">${element.weather[0].main}:  ${element.weather[0].description}</p>
         <p class="weather-details">${Math.round(element.main.temp)}°F, ${element.main.humidity}% humidity</p>      </div>`;
   return result;
@@ -109,11 +109,11 @@ function renderFoursquarePill(element, index) {
     address = ''
   };
   return `<div class="foursquare-page">
-      <p class="pill-title"><span>${index+1}.</span> <a href="https://foursquare.com/v/${element.venue.id}" target="_blank">${element.venue.name}</a> </p>      <button class="foursquare-pill-button foursquare-pill-button-like">Check Out!</button>
+      <p class="pill-title"><span>${index+1}.</span> <a href="https://foursquare.com/v/${element.venue.id}" target="_blank">${element.venue.name}</a> <div class="pill-categories">` +
+          renderFoursquarePillCategories(element.venue.categories) +
+          `</div></p>      <button class="foursquare-pill-button foursquare-pill-button-like">Check Out!</button>
             <button class="foursquare-pill-button foursquare-pill-button-dislike">Dislike</button>
-      <div class="pill-categories">` +
-    renderFoursquarePillCategories(element.venue.categories) +
-    `</div>
+
       <div class="foursquare-pill-address">
       ${address} - <a href="https://www.google.com/maps/search/?api=1&query=${element.venue.location.lat},${element.venue.location.lng}" target="_blank">See Map</a>
       </div>
