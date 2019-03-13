@@ -1,23 +1,14 @@
-let destLoc = '';
-let markers = [];
-
-const fourURL = 'https://api.foursquare.com/v2/venues/explore?';
-// api.openweathermap.org/data/2.5/forecast?q={city name},{country code}
-// api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}
-
-const weatherURL = 'https://api.openweathermap.org/data/2.5/'
-const directionsURL = 'https://maps.googleapis.com/maps/api/directions/json?';
-
 function formatQueryParams(params) {
   const queryItems = Object.keys(params).map(key =>
     `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
   return queryItems.join('&');
 }
 
-let weatherCurrentResponse = {};
+// let weatherCurrentResponse = {};
 
 function getWeatherCurrent(weatherParams) {
   console.log('weather current response:');
+  const weatherURL = 'https://api.openweathermap.org/data/2.5/'
   let weatherCurrentRequest = weatherURL + 'weather?' + formatQueryParams(weatherParams);
   fetch(weatherCurrentRequest)
     .then(response => response.json())
@@ -46,10 +37,11 @@ function renderCurrentWeather(responseJson) {
   }
 }
 
-let forecastResponse = [];
+// let forecastResponse = [];
 
 function getWeatherForecast(weatherParams) {
   console.log('weather forecast response:');
+  const weatherURL = 'https://api.openweathermap.org/data/2.5/'
   let weatherForecastRequest = weatherURL + 'forecast?' + formatQueryParams(weatherParams);
   fetch(weatherForecastRequest)
     .then(response => response.json())
@@ -68,10 +60,10 @@ function getWeatherForecast(weatherParams) {
     .catch();
 }
 
-const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function renderWeatherForecast(element) {
+  const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   let result = '';
   let dateForecast = new Date(element.dt * 1000);
   const dateObject = {
@@ -80,15 +72,15 @@ function renderWeatherForecast(element) {
     day: dayOfWeek[dateForecast.getDay()],
     time: dateForecast.getTime()
   };
-  let dateForecastReadable = dateForecast.toDateString();
-  //let month = dateForecast.getMonth();
-  let dateTimeForecast = dateForecast.toLocaleTimeString(undefined, {
-    month: 'short',
-    day: 'numeric',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+  // let dateForecastReadable = dateForecast.toDateString();
+  // //let month = dateForecast.getMonth();
+  // let dateTimeForecast = dateForecast.toLocaleTimeString(undefined, {
+  //   month: 'short',
+  //   day: 'numeric',
+  //   weekday: 'short',
+  //   hour: '2-digit',
+  //   minute: '2-digit'
+  // });
   let dateString = `${dateObject.day},  ${dateObject.month} ${dateObject.date}`;
 
   result += `<div class="weather-container">
@@ -121,99 +113,93 @@ function renderFoursquarePill(element, index) {
             <button class="foursquare-pill-button foursquare-pill-button-dislike">Dislike</button>
       <div class="pill-categories">` +
     renderFoursquarePillCategories(element.venue.categories) +
-
     `</div>
-
       <div class="foursquare-pill-address">
-      ${address} -
-        <a href="https://www.google.com/maps/search/?api=1&query=${element.venue.location.lat},${element.venue.location.lng}" target="_blank">See Map</a>
+      ${address} - <a href="https://www.google.com/maps/search/?api=1&query=${element.venue.location.lat},${element.venue.location.lng}" target="_blank">See Map</a>
       </div>
-        </div>
-    `
+        </div>`
 }
-let foursquareResponse = [];
 
 function getFoursquare(fourParams) {
+  let foursquareResponse = [];
+  const fourURL = 'https://api.foursquare.com/v2/venues/explore?';
   console.log('foursquare response:');
   let fourRequest = fourURL + formatQueryParams(fourParams);
   fetch(fourRequest)
     .then(response => response.json())
     .then(responseJson => {
-        console.log(responseJson);
-        foursquareResponse = responseJson;
-        if (responseJson.meta.code != 200) {
-          $('.error-msg').append(`Error getting recommended places: ${responseJson.meta.errorDetail}`)
-          }
-          else {
-            $('.foursquare').append(`<p class="section-header">Recommended places at ${responseJson.response.geocode.displayString}</p>`);
-            for (let i = 0; i < responseJson.response.groups[0].items.length; i++) {
-              $('.foursquare').append(renderFoursquarePill(responseJson.response.groups[0].items[i], i))
-            };
-          };
-          //  $('.foursquare').append(
-          //     `<pre>${JSON.stringify(responseJson, null, 4)}</pre>`
-          //   );
-        });
-    }
-
-  // function watchCurrentLocation() {
-  //   console.log('use current loc');
-  //   $('#use-current-loc').click(e => {
-  //     e.preventDefault();
-  //     getLocation();
-  //   })
-  // }
-
-  function watchSubmit() {
-    $('.button-start-search').click(e => {
-      e.preventDefault();
-      $(".set-cities").detach().prependTo(".results");
-      $('.start-screen').addClass('hidden');
-      $('.weather-current').empty();
-      $('.weather-forecast').empty();
-      $('.foursquare').empty();
-      // $('.maps').empty();
-      $('.error-msg').empty();
-      console.log($('input[name="current-loc"]').val());
-      console.log($('input[name="destination-loc"]').val());
-      let startLoc = $('input[name="current-loc"]').val();
-      //destLoc = 'goleta'; //$('input[name="destination-loc"]').val();
-      destLoc = $('input[name="destination-loc"]').val() ? $('input[name="destination-loc"]').val() : 'goleta';
-
-      const fourParams = {
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-        near: destLoc,
-        section: 'topPicks',
-        //query: 'things to do',
-        v: '20190228'
+      console.log(responseJson);
+      foursquareResponse = responseJson;
+      if (responseJson.meta.code != 200) {
+        $('.error-msg').append(`Error getting recommended places: ${responseJson.meta.errorDetail}`)
+      } else {
+        $('.foursquare').append(`<p class="section-header">Recommended places at ${responseJson.response.geocode.displayString}</p>`);
+        for (let i = 0; i < responseJson.response.groups[0].items.length; i++) {
+          $('.foursquare').append(renderFoursquarePill(responseJson.response.groups[0].items[i], i))
+        };
       };
-      const weatherParams = {
-        q: destLoc,
-        units: 'imperial', //imperial-f, metric-c, standard-k
-        APPID: weatherAPI
-      };
-
-      getWeatherCurrent(weatherParams);
-      getWeatherForecast(weatherParams);
-      getFoursquare(fourParams);
-
-    })
-  }
-
-  function watchButtonLike() {
-    $("body").on("click", ".foursquare-pill-button-like", function(e) {
-      e.preventDefault;
-      $(this).toggleClass("like-button-selected");
+      //  $('.foursquare').append(
+      //     `<pre>${JSON.stringify(responseJson, null, 4)}</pre>`
+      //   );
     });
-    $("body").on("click", ".foursquare-pill-button-dislike", function(e) {
-      e.preventDefault;
-      $(this).toggleClass("dislike-button-selected");
-    })
-  }
+}
 
-  $(function() {
-    console.log('app loaded');
-    watchSubmit();
-    watchButtonLike();
+// function watchCurrentLocation() {
+//   console.log('use current loc');
+//   $('#use-current-loc').click(e => {
+//     e.preventDefault();
+//     getLocation();
+//   })
+// }
+
+function watchSubmit() {
+  let destLoc = '';
+  $('.button-start-search').click(e => {
+    e.preventDefault();
+    $('.set-cities').detach().prependTo('.results');
+    $('.start-screen').addClass('hidden');
+    $('.weather-current').empty();
+    $('.weather-forecast').empty();
+    $('.foursquare').empty();
+    $('.error-msg').empty();
+    console.log($('input[name="current-loc"]').val());
+    console.log($('input[name="destination-loc"]').val());
+    let startLoc = $('input[name="current-loc"]').val();
+    //destLoc = 'goleta'; //$('input[name="destination-loc"]').val();
+    destLoc = $('input[name="destination-loc"]').val() ? $('input[name="destination-loc"]').val() : 'goleta';
+
+    const fourParams = {
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      near: destLoc,
+      section: 'topPicks',
+      //query: 'things to do',
+      v: '20190228'
+    };
+    const weatherParams = {
+      q: destLoc,
+      units: 'imperial', //imperial-f, metric-c, standard-k
+      APPID: weatherAPI
+    };
+    getWeatherCurrent(weatherParams);
+    getWeatherForecast(weatherParams);
+    getFoursquare(fourParams);
+  })
+}
+
+function watchButtonLike() {
+  $("body").on("click", ".foursquare-pill-button-like", function(e) {
+    e.preventDefault;
+    $(this).toggleClass("like-button-selected");
   });
+  $("body").on("click", ".foursquare-pill-button-dislike", function(e) {
+    e.preventDefault;
+    $(this).toggleClass("dislike-button-selected");
+  })
+}
+
+$(function() {
+  console.log('app loaded');
+  watchSubmit();
+  watchButtonLike();
+});
