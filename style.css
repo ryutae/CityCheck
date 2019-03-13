@@ -27,7 +27,7 @@ a {
 
 .start-screen {
   text-align: center;
-  background-color: rgba(94, 83, 83, 0.3);
+  background-color: rgba(94, 83, 83, 0.5);
   width: 80%;
   height: 100%;
   margin: 40% auto;
@@ -231,7 +231,6 @@ a {
   .results-container {
     display: flex;
     justify-content: space-around;
-    padding: 0 2rem;
   }
 
   .section-header {
