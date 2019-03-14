@@ -4,8 +4,6 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-// let weatherCurrentResponse = {};
-
 function getWeatherCurrent(weatherParams) {
   console.log('weather current response:');
   const weatherURL = 'https://api.openweathermap.org/data/2.5/'
@@ -16,13 +14,8 @@ function getWeatherCurrent(weatherParams) {
       console.log(responseJson);
       weatherCurrentResponse = responseJson;
       renderCurrentWeather(responseJson);
-      // $('.weather').append(`
-      //   Weather Current Response:
-      // <pre>${JSON.stringify(responseJson, null, 4)}</pre>
-      // `
-      // );
     })
-    .catch();
+    .catch(err => $('.error-msg').append(`Something went wrong: ${err.message}`));
 }
 
 function renderCurrentWeather(responseJson) {
@@ -36,8 +29,6 @@ function renderCurrentWeather(responseJson) {
     </div>`);
   }
 }
-
-// let forecastResponse = [];
 
 function getWeatherForecast(weatherParams) {
   console.log('weather forecast response:');
@@ -55,7 +46,6 @@ function getWeatherForecast(weatherParams) {
           $('.weather-forecast').append(renderWeatherForecast(responseJson.list[i]))
         };
       }
-      //$('.weather').append(`<pre>${JSON.stringify(responseJson, null, 4)}</pre>`)
     })
     .catch();
 }
@@ -72,15 +62,6 @@ function renderWeatherForecast(element) {
     day: dayOfWeek[dateForecast.getDay()],
     time: dateForecast.getTime()
   };
-  // let dateForecastReadable = dateForecast.toDateString();
-  // //let month = dateForecast.getMonth();
-  // let dateTimeForecast = dateForecast.toLocaleTimeString(undefined, {
-  //   month: 'short',
-  //   day: 'numeric',
-  //   weekday: 'short',
-  //   hour: '2-digit',
-  //   minute: '2-digit'
-  // });
   let dateString = `${dateObject.day},  ${dateObject.month} ${dateObject.date}`;
 
   result += `<div class="weather-container">
@@ -90,8 +71,6 @@ function renderWeatherForecast(element) {
         <p class="weather-details">${Math.round(element.main.temp)}°F, ${element.main.humidity}% humidity</p>      </div>`;
   return result;
 }
-
-
 
 function renderFoursquarePillCategories(elements) {
   let result = '';
@@ -138,19 +117,11 @@ function getFoursquare(fourParams) {
           $('.foursquare').append(renderFoursquarePill(responseJson.response.groups[0].items[i], i))
         };
       };
-      //  $('.foursquare').append(
-      //     `<pre>${JSON.stringify(responseJson, null, 4)}</pre>`
-      //   );
-    });
-}
 
-// function watchCurrentLocation() {
-//   console.log('use current loc');
-//   $('#use-current-loc').click(e => {
-//     e.preventDefault();
-//     getLocation();
-//   })
-// }
+    })
+    .catch(err => $('.error-msg').append(`Something went wrong: ${err.message}`));
+
+}
 
 function watchSubmit() {
   let destLoc = '';
@@ -162,10 +133,8 @@ function watchSubmit() {
     $('.weather-forecast').empty();
     $('.foursquare').empty();
     $('.error-msg').empty();
-    console.log($('input[name="current-loc"]').val());
     console.log($('input[name="destination-loc"]').val());
-    let startLoc = $('input[name="current-loc"]').val();
-    //destLoc = 'goleta'; //$('input[name="destination-loc"]').val();
+    //Default location is set to Goleta if no input is provided
     destLoc = $('input[name="destination-loc"]').val() ? $('input[name="destination-loc"]').val() : 'goleta';
 
     const fourParams = {
@@ -173,7 +142,6 @@ function watchSubmit() {
       client_secret: CLIENT_SECRET,
       near: destLoc,
       section: 'topPicks',
-      //query: 'things to do',
       v: '20190228'
     };
     const weatherParams = {

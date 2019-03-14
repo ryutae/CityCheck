@@ -14,7 +14,6 @@ body {
   -moz-background-size: cover;
   -webkit-background-size: cover;
   background-repeat: no-repeat;
-  /* background-color: rgba(238, 238, 238, 0.6) !important; */
   background-blend-mode: color;
   color: #fff;
   background-attachment: fixed;
@@ -94,8 +93,6 @@ a {
   color: #222222;
   margin-bottom: 0;
 }
-
-.pill-title span {}
 
 .pill-description {
   margin-top: 0;
