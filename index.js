@@ -27,7 +27,7 @@ function renderCurrentWeather(responseJson) {
   } else {
     $('.weather-current').append(
       `<p class="section-header">${responseJson.name} Current Weather</p>
-            <div class="weather-container"> <img class="weather-icon" src="https://openweathermap.org/img/w/${responseJson.weather[0].icon}.png"> <p class="weather-icon-details">${responseJson.weather[0].main}:  ${responseJson.weather[0].description}</p>
+            <div class="weather-container"> <img class="weather-icon" src="https://openweathermap.org/img/w/${responseJson.weather[0].icon}.png" alt="weather icon"> <p class="weather-icon-details">${responseJson.weather[0].main}:  ${responseJson.weather[0].description}</p>
             <p class="weather-details">${Math.round(responseJson.main.temp)}°F,     ${responseJson.main.humidity}% humidity</p>
     </div>`);
   }
@@ -71,7 +71,7 @@ function renderWeatherForecast(element) {
   result += `
     <div class="weather-container">
       <p class="weather-date">${dateString}</p>
-      <img class="weather-icon" src="https://openweathermap.org/img/w/${element.weather[0].icon}.png">
+      <img class="weather-icon" src="https://openweathermap.org/img/w/${element.weather[0].icon}.png" alt="weather icon">
       <p class="weather-icon-details">${element.weather[0].main}:  ${element.weather[0].description}</p>
       <p class="weather-details">${Math.round(element.main.temp)}°F, ${element.main.humidity}% humidity</p>
     </div>`;
