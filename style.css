@@ -225,6 +225,9 @@ a {
 }
 
 @media screen and (min-width: 1024px) {
+  .start-screen {
+    margin: 10% auto 0;
+}
   .results-container {
     display: flex;
     justify-content: space-around;
