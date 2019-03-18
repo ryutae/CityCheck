@@ -6,7 +6,10 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.5) 100%), url('https://farm2.staticflickr.com/1867/44502616031_9ffdb932fc_b.jpg');
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    ),url('https://farm9.staticflickr.com/8523/8679545605_71b27af6d9_b.jpg');
   background-position: center;
   background-size: cover;
   -ms-background-size: cover;
@@ -15,7 +18,7 @@ body {
   -webkit-background-size: cover;
   background-repeat: no-repeat;
   background-blend-mode: color;
-  color: #fff;
+  color: white;
   background-attachment: fixed;
 }
 
@@ -26,7 +29,6 @@ a {
 
 .start-screen {
   text-align: center;
-  background-color: rgba(94, 83, 83, 0.5);
   width: 80%;
   height: 100%;
   margin: 1rem auto;
@@ -72,7 +74,6 @@ a {
   font-size: 2rem;
   margin: 3rem 0 0 0;
   text-align: center;
-  /* background-color: rgba(94, 83, 83, 0.3); */
 }
 
 .foursquare-page {
@@ -227,7 +228,8 @@ a {
 @media screen and (min-width: 1024px) {
   .start-screen {
     margin: 10% auto 0;
-}
+  }
+
   .results-container {
     display: flex;
     justify-content: space-around;
