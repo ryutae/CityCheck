@@ -2,36 +2,37 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Check temperature and recommended locations for a city">
-  <title>City Check</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Check temperature and recommended locations for a city">
+    <title>City Check</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="start-screen" role="header">
-      <h1>City Check</h1>
-      <p class="section-header">Find places to check out in a city and know the weather too!</p>
-      <form class="set-cities">
-        <label for="destination-loc">Destination</label><input type="text" name="destination-loc" value="" size=30 placeholder="Ex: Goleta (city name only)">
-        <button type="button" class="button-start-search" name="submit">Explore City!</button>
-        <p class="error-msg"></p>
-      </form>
+    <div class="start-screen" role="banner">
+        <h1>City Check</h1>
+        <p class="section-header">Find places to check out in a city and know the weather too!</p>
+        <form class="set-cities" role="search">
+            <label for="destination-loc">Destination</label><input type="text" name="destination-loc" value="" size=20 placeholder="Goleta (city name only)">
+            <button type="button" class="button-start-search" name="submit">Explore City!</button>
+            <p class="error-msg"></p>
+        </form>
     </div>
     <main class="results" role="main">
-      <div class="results-container" aria-live="polite">
-        <section class="weather">
-          <div class="weather-current"></div>
-          <div class="weather-forecast"></div>
-        </section>
-        <section class="foursquare"></section>
-      </div>
+        <div class="results-container" aria-live="polite">
+            <section class="weather">
+                <div class="weather-current"></div>
+                <div class="weather-forecast"></div>
+            </section>
+            <section class="foursquare"></section>
+        </div>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="keys.js"></script>
     <script type="text/javascript" src="index.js"></script>
 </body>
+
 </html>
