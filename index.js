@@ -125,8 +125,9 @@ function getFoursquare(fourParams) {
             foursquareResponse = responseJson;
             if (responseJson.meta.code != 200) {
                 $('.error-msg').append(`Error getting recommended places </br>`)
-            } else if (responseJson.length == 0) {
-                $('.foursquare').append('No recommended places to show');
+            } else if (responseJson.response.groups[0].items.length == 0) {
+                $('.foursquare').append(`<p class="section-header">Recommended places at ${responseJson.response.geocode.displayString}</p>
+                <p>No recommended places to show :(</p>`);
             } else {
                 $('.foursquare').append(`<p class="section-header">Recommended places at ${responseJson.response.geocode.displayString}</p>`);
                 for (let i = 0; i < responseJson.response.groups[0].items.length; i++) {
